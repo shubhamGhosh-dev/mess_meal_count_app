@@ -67,6 +67,9 @@ class MembersNofifier extends StateNotifier<List<MemberModel>> {
           : nightMealOffNames = '$nightMealOffNames${latestData[i].name}, ';
     }
 
+    dayMealOffNames = dayMealOffNames.substring(0, dayMealOffNames.length - 2);
+    nightMealOffNames = nightMealOffNames.substring(0, nightMealOffNames.length - 2);
+
     return [
       MealCount(count: dayCount, names: dayMealOffNames),
       MealCount(count: nightCount, names: nightMealOffNames)
@@ -84,8 +87,12 @@ class MembersNofifier extends StateNotifier<List<MemberModel>> {
 
     String mealCountText = '';
 
+    DateTime today = DateTime.now();
+    String dateSlug =
+        "${today.day.toString().padLeft(2, '0')}-${today.month.toString().padLeft(2, '0')}-${today.year.toString()}";
+
     mealCountText =
-        "Night - $nightCount\n($nightMealOffNames)\n\nDay - $dayCount\n($dayMealOffNames)";
+        "$dateSlug\n\nNight - $nightCount\n($nightMealOffNames)\n\nDay - $dayCount\n($dayMealOffNames)";
 
     Clipboard.setData(ClipboardData(text: mealCountText));
 
